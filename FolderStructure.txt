@@ -1,0 +1,37 @@
+about/
+│
+├── assets/
+│   └── images/
+│       ├── Badge_CCNAITN.png
+│       ├── Badge_DAE.png
+│       ├── Badge_ITC.png
+│       ├── Badge_ITDS.png
+│       ├── Badge_NALAT.png
+│       ├── Badge_RHSA1.png
+│       ├── Badge_RHSA2.png
+│       │
+│       ├── TE_ApacheNetbeans.png
+│       ├── TE_ASP.NET.png
+│       ├── TE_Assembly.png
+│       ├── TE_C.png
+│       ├── TE_C#.png
+│       ├── TE_C++.png
+│       ├── TE_CodeBlock.png
+│       ├── TE_CSS3.png
+│       ├── TE_Figma.png
+│       ├── TE_Git.png
+│       ├── TE_GitHub.png
+│       ├── TE_HTML5.png
+│       ├── TE_Java.png
+│       ├── TE_JavaScript.png
+│       ├── TE_MySQL.png
+│       ├── TE_Python.png
+│       ├── TE_R.png
+│       ├── TE_Rocky.png
+│       ├── TE_SAS.png
+│       ├── TE_SQLServer.png
+│       ├── TE_Ubuntu.png
+│       ├── TE_VisualStudio.png
+│       └── TE_VisualStudioCode.png
+│
+└── connect/

@@ -1,0 +1,272 @@
+/* ============================= */
+/* TOOLKIT PAGE LAYOUT */
+/* ============================= */
+
+.toolkit-page{
+max-width:1200px;
+margin:0 auto;
+padding:120px 40px 120px 40px;
+}
+
+
+/* ============================= */
+/* HERO SECTION */
+/* ============================= */
+
+.toolkit-hero{
+margin-bottom:120px;
+max-width:720px;
+}
+
+.toolkit-hero h1{
+font-size:48px;
+font-weight:600;
+margin-bottom:24px;
+letter-spacing:-0.02em;
+}
+
+.toolkit-hero p{
+font-size:16px;
+line-height:1.8;
+color:#555;
+}
+
+
+/* ============================= */
+/* CATEGORY SECTION */
+/* ============================= */
+
+.toolkit-category{
+margin-bottom:100px;
+}
+
+.toolkit-category h2{
+font-size:28px;
+margin-bottom:16px;
+font-weight:500;
+}
+
+.category-description{
+color:#666;
+font-size:15px;
+line-height:1.7;
+max-width:640px;
+margin-bottom:40px;
+}
+
+
+/* ============================= */
+/* GRID LAYOUT */
+/* ============================= */
+
+.tech-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(100px,1fr));
+
+gap:32px;
+
+max-width:900px;
+
+}
+
+
+/* ============================= */
+/* TECH ITEM */
+/* ============================= */
+
+.tech-item{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+gap:10px;
+
+padding:18px 12px;
+
+border-radius:12px;
+
+transition:all .3s ease;
+
+cursor:default;
+
+}
+
+
+/* ============================= */
+/* ICON */
+/* ============================= */
+
+.tech-item img{
+
+width:48px;
+height:48px;
+
+object-fit:contain;
+
+transition:all .35s ease;
+
+}
+
+
+/* ============================= */
+/* TEXT */
+/* ============================= */
+
+.tech-item span{
+
+font-size:13px;
+color:#444;
+
+transition:color .3s ease;
+
+}
+
+
+/* ============================= */
+/* HOVER EFFECT */
+/* ============================= */
+
+.tech-item:hover{
+
+transform:translateY(-6px);
+
+}
+
+.tech-item:hover img{
+
+transform:scale(1.08);
+
+filter:drop-shadow(0 0 10px rgba(230,201,109,0.45));
+
+}
+
+.tech-item:hover span{
+
+color:#000;
+
+}
+
+
+/* ============================= */
+/* CLOSING SECTION */
+/* ============================= */
+
+.toolkit-closing{
+
+margin-top:120px;
+max-width:600px;
+
+}
+
+.toolkit-closing p{
+
+font-size:15px;
+color:#666;
+line-height:1.7;
+
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media(max-width:768px){
+
+.toolkit-page{
+padding:100px 24px;
+}
+
+.toolkit-hero h1{
+font-size:36px;
+}
+
+.tech-grid{
+gap:24px;
+}
+
+}
+
+
+
+/* ============================= */
+/* REVEAL ANIMATION */
+/* ============================= */
+
+.toolkit-hero,
+.toolkit-category,
+.toolkit-closing,
+.tech-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    box-shadow 0.35s ease,
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.toolkit-hero.is-visible,
+.toolkit-category.is-visible,
+.toolkit-closing.is-visible,
+.tech-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================= */
+/* TECH ITEM PREMIUM EFFECT */
+/* ============================= */
+
+.tech-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(230, 201, 109, 0.12);
+  background:
+    radial-gradient(
+      160px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+      rgba(230, 201, 109, 0.18),
+      transparent 45%
+    ),
+    rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+}
+
+.tech-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(230, 201, 109, 0.04)
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.tech-item:hover::before {
+  opacity: 1;
+}
+
+.tech-item:hover {
+  border-color: rgba(230, 201, 109, 0.3);
+  box-shadow: 0 18px 36px rgba(25, 25, 25, 0.08);
+}
+
+/* ============================= */
+/* SMALL RESPONSIVE TUNING */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .tech-item:hover {
+    transform: translateY(-4px);
+  }
+}
