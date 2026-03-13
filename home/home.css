@@ -1,0 +1,224 @@
+.home-hero {
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  gap: 34px;
+  align-items: center;
+  min-height: calc(100vh - 132px);
+  padding-top: 18px;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.hero-kicker::before {
+  content: '';
+  width: 34px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.hero-copy h1 {
+  margin: 0 0 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6.2vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  max-width: 10ch;
+}
+
+.hero-lead {
+  max-width: 52ch;
+  color: var(--muted);
+  line-height: 1.86;
+  margin-bottom: 28px;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.hero-metrics article {
+  padding: 18px 18px 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(81, 63, 21, 0.10);
+  background: rgba(255,255,255,0.54);
+}
+
+.hero-metrics strong,
+.hero-metrics span {
+  display: block;
+}
+
+.hero-metrics strong {
+  margin-bottom: 8px;
+}
+
+.hero-metrics span {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 660px;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 1px solid rgba(81, 63, 21, 0.12);
+  background:
+    radial-gradient(circle at 26% 22%, rgba(247, 239, 199, 0.96), transparent 26%),
+    radial-gradient(circle at 82% 18%, rgba(239, 217, 129, 0.42), transparent 22%),
+    linear-gradient(180deg, rgba(255,255,255,0.72), rgba(250,245,231,0.90));
+  box-shadow: var(--shadow);
+}
+
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.visual-card {
+  position: absolute;
+  z-index: 2;
+  padding: 22px;
+  backdrop-filter: blur(18px);
+}
+
+.visual-card-main {
+  left: 32px;
+  bottom: 32px;
+  width: min(360px, calc(100% - 64px));
+}
+
+.visual-card-side {
+  top: 30px;
+  right: 30px;
+  min-width: 180px;
+  text-align: right;
+}
+
+.visual-label {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(247,239,199,0.84);
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.visual-title {
+  font-size: 1.34rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.mini-chart {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  gap: 10px;
+  min-height: 88px;
+}
+
+.mini-chart span {
+  border-radius: 999px 999px 10px 10px;
+  background: linear-gradient(180deg, rgba(215, 184, 89, 0.3), rgba(184, 140, 47, 0.92));
+  animation: pulseBars 3.6s ease-in-out infinite;
+}
+
+.mini-chart span:nth-child(1) { height: 42%; animation-delay: 0s; }
+.mini-chart span:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+.mini-chart span:nth-child(3) { height: 56%; animation-delay: 0.4s; }
+.mini-chart span:nth-child(4) { height: 92%; animation-delay: 0.6s; }
+.mini-chart span:nth-child(5) { height: 72%; animation-delay: 0.8s; }
+.mini-chart span:nth-child(6) { height: 64%; animation-delay: 1s; }
+
+@keyframes pulseBars {
+  0%, 100% { transform: scaleY(1); filter: saturate(1); }
+  50% { transform: scaleY(0.88); filter: saturate(1.12); }
+}
+
+.stat-number {
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--muted);
+}
+
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.focus-item {
+  padding: 24px;
+}
+
+.focus-index {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.focus-item h3 {
+  margin: 0 0 12px;
+  font-size: 1.16rem;
+}
+
+.focus-item p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 980px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy h1 {
+    max-width: 100%;
+  }
+
+  .hero-visual {
+    min-height: 540px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-metrics,
+  .focus-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-card-main,
+  .visual-card-side {
+    position: absolute;
+  }
+
+  .visual-card-side {
+    min-width: 0;
+  }
+}

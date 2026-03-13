@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work | Valerie Cheong</title>
+  <link rel="stylesheet" href="../global/css/base.css" />
+  <link rel="stylesheet" href="../global/css/layout.css" />
+  <link rel="stylesheet" href="./work.css" />
+</head>
+<body data-page="work" data-level="1" class="page-shell">
+  <div id="header"></div>
+
+  <main>
+    <section class="section shell">
+      <div class="section-heading reveal">
+        <div>
+          <span class="section-kicker">Work</span>
+          <h1 class="section-title">Selected work, shown with presence.</h1>
+        </div>
+        <p class="section-lead">
+          A focused project presentation that avoids a crowded card grid. Each piece appears as a curated,
+          interactive preview with a clear analytical angle.
+        </p>
+      </div>
+
+      <div class="work-layout">
+        <div class="work-menu reveal">
+          <button class="work-tab is-active" data-project="0">Predictive Model</button>
+          <button class="work-tab" data-project="1">Segmentation Study</button>
+          <button class="work-tab" data-project="2">Visual Dashboard</button>
+        </div>
+
+        <article class="project-stage glass-panel reveal" id="projectStage">
+          <div class="project-visual">
+            <div class="project-graphic project-graphic-0 is-active"></div>
+            <div class="project-graphic project-graphic-1"></div>
+            <div class="project-graphic project-graphic-2"></div>
+          </div>
+
+          <div class="project-copy">
+            <span class="project-kicker" id="projectKicker">Predictive analytics</span>
+            <h2 id="projectTitle">Bank Marketing Prediction Model</h2>
+            <p id="projectText">
+              A data-focused modelling study designed to identify the factors influencing deposit subscription outcomes,
+              presented through a polished and structured visual narrative.
+            </p>
+
+            <ul class="project-points" id="projectPoints"></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="../global/js/main.js"></script>
+  <script src="./work.js"></script>
+</body>
+</html>

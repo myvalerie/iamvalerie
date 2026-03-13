@@ -1,0 +1,120 @@
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 22px;
+}
+
+.about-card,
+.profile-panel,
+.principle {
+  padding: 28px;
+}
+
+.about-card p {
+  margin: 0 0 18px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+
+.about-card p:last-child {
+  margin-bottom: 0;
+}
+
+.profile-panel {
+  position: relative;
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.profile-orbit {
+  position: absolute;
+  width: 74%;
+  aspect-ratio: 1;
+  border: 1px dashed rgba(184, 140, 47, 0.34);
+  border-radius: 50%;
+  animation: rotateOrbit 24s linear infinite;
+}
+
+.profile-orbit::before,
+.profile-orbit::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(247,239,199,1), rgba(184,140,47,0.9));
+}
+
+.profile-orbit::before {
+  top: 6%;
+  left: 18%;
+}
+
+.profile-orbit::after {
+  bottom: 12%;
+  right: 12%;
+}
+
+@keyframes rotateOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.profile-avatar {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 36px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  color: #5e4817;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.94), rgba(247,239,199,0.92)),
+    radial-gradient(circle at top right, rgba(215,184,89,0.38), transparent 35%);
+  border: 1px solid rgba(81, 63, 21, 0.10);
+  box-shadow: 0 22px 44px rgba(117, 89, 25, 0.12);
+}
+
+.profile-meta {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.profile-meta strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.principle h3 {
+  margin: 0 0 14px;
+  font-size: 1.2rem;
+}
+
+.principle p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+@media (max-width: 940px) {
+  .about-layout,
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+}
