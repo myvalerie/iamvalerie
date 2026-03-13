@@ -4,74 +4,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About | Valerie Cheong</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
   <link rel="stylesheet" href="../global/css/base.css" />
   <link rel="stylesheet" href="../global/css/layout.css" />
-  <link rel="stylesheet" href="./about.css" />
+  <link rel="stylesheet" href="about.css" />
 </head>
-<body data-page="about" data-level="1" class="page-shell">
+
+<body data-level="1" data-page="about">
   <div id="header"></div>
 
-  <main>
-    <section class="section shell about-hero">
-      <div class="section-heading reveal">
-        <div>
-          <span class="section-kicker">About</span>
-          <h1 class="section-title">Structured, refined, and clear by design.</h1>
-        </div>
-        <p class="section-lead">
-          This page presents a concise professional profile without repetition, focusing on character,
-          direction, and the principles shaping the work.
-        </p>
-      </div>
+  <main class="about-page">
+    <section class="about-hero shell">
+      <div class="section-kicker reveal">About</div>
 
-      <div class="about-layout">
-        <article class="about-card glass-panel reveal">
-          <p>
-            I am a Computer Science student specialising in Data Analytics, with a strong interest in shaping
-            clear digital experiences around structure, insight, and thoughtful presentation.
-          </p>
-          <p>
-            My approach values analytical depth and visual restraint. Rather than overloading a public-facing
-            site with repeated information, I prefer clarity, purpose, and a polished user journey.
-          </p>
-          <p>
-            The result is a portfolio that communicates reliability, confidence, and design awareness while
-            remaining grounded in data-led thinking.
-          </p>
-        </article>
+      <div class="about-hero-grid">
+        <div class="about-copy">
+          <h1 class="about-title reveal">A Thoughtful Approach to Data, Systems, and Digital Work</h1>
 
-        <aside class="profile-panel glass-panel reveal">
-          <div class="profile-orbit"></div>
-          <div class="profile-avatar">VC</div>
-          <div class="profile-meta">
-            <strong>Public Identity</strong>
-            <span>Data Analytics · Professional Presentation</span>
+          <p class="about-lead reveal">
+            I am a Computer Science student specialising in Data Analytics,
+            with a strong interest in transforming data into meaningful insight
+            through structure, clarity, and analytical thinking.
+          </p>
+
+          <p class="about-description reveal">
+            My work spans software development, data-oriented analysis, and
+            system-based problem solving. I approach each project with an
+            emphasis on reliability, thoughtful implementation, and clear
+            communication — not only to build functional solutions, but to
+            present them in a way that is refined, understandable, and
+            purposeful.
+          </p>
+
+          <div class="button-row reveal">
+            <a class="button primary" href="../work/">View Work</a>
+            <a class="button secondary" href="../connect/">Connect</a>
           </div>
-        </aside>
+        </div>
+
+        <div class="about-visual panel reveal">
+          <div class="visual-glow"></div>
+          <div class="profile-frame">
+            <div class="profile-core">
+              <span>VC</span>
+            </div>
+          </div>
+
+          <div class="profile-tag tag-one">Clarity</div>
+          <div class="profile-tag tag-two">Structure</div>
+          <div class="profile-tag tag-three">Integrity</div>
+        </div>
       </div>
     </section>
 
     <section class="section shell">
       <div class="section-heading reveal">
         <div>
-          <span class="section-kicker">Principles</span>
-          <h2 class="section-title">What guides the work.</h2>
+          <div class="section-kicker">Profile</div>
+          <h2 class="section-title">Who I Am</h2>
         </div>
+
+        <p class="section-lead">
+          A concise overview of the mindset, values, and analytical direction
+          that shape the way I approach technical and data-focused work.
+        </p>
+      </div>
+
+      <div class="about-panels">
+        <article class="about-panel glass-panel reveal">
+          <h3>Background</h3>
+          <p>
+            I am currently pursuing a Bachelor of Science (Honours) in Computer
+            Science with a specialism in Data Analytics. My academic experience
+            has allowed me to work across software development, predictive
+            modelling, system design, and technical implementation through a
+            variety of project-based contexts.
+          </p>
+        </article>
+
+        <article class="about-panel glass-panel reveal">
+          <h3>Approach</h3>
+          <p>
+            I value work that is structured, reliable, and thoughtfully
+            presented. Whether developing an application, analysing a dataset,
+            or solving a technical challenge, I focus on building solutions
+            that are not only functional, but clear in purpose and meaningful
+            in outcome.
+          </p>
+        </article>
+
+        <article class="about-panel glass-panel reveal">
+          <h3>Focus</h3>
+          <p>
+            My interests centre around data analytics, digital presentation,
+            technical problem solving, and the connection between system logic
+            and human understanding. I am especially drawn to work that
+            combines analytical depth with clarity in communication.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-heading reveal">
+        <div>
+          <div class="section-kicker">Principles</div>
+          <h2 class="section-title">What Guides the Work</h2>
+        </div>
+
+        <p class="section-lead">
+          The values that shape how I think, build, analyse, and present.
+        </p>
       </div>
 
       <div class="principles-grid">
-        <article class="principle glass-panel reveal">
+        <article class="principle-card panel reveal">
+          <div class="principle-number">01</div>
           <h3>Clarity</h3>
-          <p>Complex information should arrive as something understandable, elegant, and easy to navigate.</p>
+          <p>
+            I believe complexity should lead to understanding. Whether working
+            with data, systems, or interfaces, I aim to make information more
+            readable, meaningful, and refined.
+          </p>
         </article>
-        <article class="principle glass-panel reveal">
+
+        <article class="principle-card panel reveal">
+          <div class="principle-number">02</div>
           <h3>Integrity</h3>
-          <p>Professional presentation should remain honest, focused, and free from unnecessary noise.</p>
+          <p>
+            Credibility matters. I value honest analysis, transparent thinking,
+            and a responsible approach to problem solving, especially in
+            technical and data-driven work.
+          </p>
         </article>
-        <article class="principle glass-panel reveal">
+
+        <article class="principle-card panel reveal">
+          <div class="principle-number">03</div>
           <h3>Structure</h3>
-          <p>Strong design decisions come from order, intention, and a system that supports every page.</p>
+          <p>
+            Good work is supported by order and logic. I approach projects with
+            a focus on clean organisation, disciplined execution, and purposeful
+            design decisions.
+          </p>
         </article>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="about-closing glass-panel reveal">
+        <div class="closing-line"></div>
+        <p>
+          I see technical work not only as a process of building and analysing,
+          but as an opportunity to create outcomes that are thoughtful,
+          reliable, and clearly expressed.
+        </p>
       </div>
     </section>
   </main>
@@ -79,6 +172,6 @@
   <div id="footer"></div>
 
   <script src="../global/js/main.js"></script>
-  <script src="./about.js"></script>
+  <script src="about.js"></script>
 </body>
 </html>

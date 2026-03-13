@@ -63,6 +63,8 @@ function initializeToolkitHoverTilt() {
 
   items.forEach((item) => {
     item.addEventListener("mousemove", (event) => {
+      if (window.innerWidth <= 768) return;
+
       const rect = item.getBoundingClientRect();
 
       const x = event.clientX - rect.left;

@@ -1,15 +1,47 @@
-const profilePanel = document.querySelector('.profile-panel');
-const avatar = document.querySelector('.profile-avatar');
+document.addEventListener("DOMContentLoaded", () => {
+  initializeAboutParallax();
+});
 
-if (profilePanel && avatar) {
-  profilePanel.addEventListener('mousemove', (event) => {
-    const rect = profilePanel.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
-    avatar.style.transform = `translate(${x}px, ${y}px) rotateY(${x * 0.9}deg) rotateX(${-y * 0.9}deg)`;
+function initializeAboutParallax() {
+  const visual = document.querySelector(".about-visual");
+  if (!visual) return;
+
+  visual.addEventListener("mousemove", (event) => {
+    if (window.innerWidth <= 768) return;
+
+    const rect = visual.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const moveX = ((x - centerX) / centerX) * 10;
+    const moveY = ((y - centerY) / centerY) * 10;
+
+    const frame = visual.querySelector(".profile-frame");
+    const tags = visual.querySelectorAll(".profile-tag");
+
+    if (frame) {
+      frame.style.transform = `translate(${moveX * 0.35}px, ${moveY * 0.35}px)`;
+    }
+
+    tags.forEach((tag, index) => {
+      const factor = (index + 1) * 0.18;
+      tag.style.transform = `translate(${moveX * factor}px, ${moveY * factor}px)`;
+    });
   });
 
-  profilePanel.addEventListener('mouseleave', () => {
-    avatar.style.transform = 'translate(0, 0) rotateY(0deg) rotateX(0deg)';
+  visual.addEventListener("mouseleave", () => {
+    const frame = visual.querySelector(".profile-frame");
+    const tags = visual.querySelectorAll(".profile-tag");
+
+    if (frame) {
+      frame.style.transform = "";
+    }
+
+    tags.forEach((tag) => {
+      tag.style.transform = "";
+    });
   });
 }

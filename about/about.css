@@ -1,120 +1,243 @@
-.about-layout {
+.about-page {
+  position: relative;
+}
+
+.about-hero {
+  padding-top: 34px;
+}
+
+.about-hero-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 22px;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 36px;
+  align-items: center;
+  margin-top: 22px;
 }
 
-.about-card,
-.profile-panel,
-.principle {
-  padding: 28px;
+.about-title {
+  margin: 0 0 20px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
 }
 
-.about-card p {
+.about-lead {
+  max-width: 620px;
   margin: 0 0 18px;
+  font-size: 1.02rem;
   line-height: 1.9;
-  color: var(--muted);
-}
-
-.about-card p:last-child {
-  margin-bottom: 0;
-}
-
-.profile-panel {
-  position: relative;
-  min-height: 420px;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.profile-orbit {
-  position: absolute;
-  width: 74%;
-  aspect-ratio: 1;
-  border: 1px dashed rgba(184, 140, 47, 0.34);
-  border-radius: 50%;
-  animation: rotateOrbit 24s linear infinite;
-}
-
-.profile-orbit::before,
-.profile-orbit::after {
-  content: '';
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(247,239,199,1), rgba(184,140,47,0.9));
-}
-
-.profile-orbit::before {
-  top: 6%;
-  left: 18%;
-}
-
-.profile-orbit::after {
-  bottom: 12%;
-  right: 12%;
-}
-
-@keyframes rotateOrbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.profile-avatar {
-  position: relative;
-  z-index: 1;
-  width: 180px;
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  border-radius: 36px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 4rem;
-  color: #5e4817;
-  background:
-    linear-gradient(145deg, rgba(255,255,255,0.94), rgba(247,239,199,0.92)),
-    radial-gradient(circle at top right, rgba(215,184,89,0.38), transparent 35%);
-  border: 1px solid rgba(81, 63, 21, 0.10);
-  box-shadow: 0 22px 44px rgba(117, 89, 25, 0.12);
-}
-
-.profile-meta {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  right: 24px;
-  text-align: center;
-  color: var(--muted);
-}
-
-.profile-meta strong {
-  display: block;
-  margin-bottom: 8px;
   color: var(--text);
 }
 
-.principles-grid {
+.about-description {
+  max-width: 620px;
+  margin: 0 0 28px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.about-visual {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(247, 239, 199, 0.78), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.62));
+}
+
+.visual-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(223, 189, 90, 0.18), transparent 30%);
+  pointer-events: none;
+}
+
+.profile-frame {
+  position: relative;
+  z-index: 2;
+  width: 230px;
+  height: 300px;
+  border-radius: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(81, 63, 21, 0.08);
+  background: rgba(255, 255, 255, 0.56);
+  box-shadow: 0 22px 40px rgba(93, 72, 24, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.profile-core {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    135deg,
+    rgba(247, 239, 199, 1),
+    rgba(223, 189, 90, 0.95)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 20px 36px rgba(194, 155, 53, 0.22);
+}
+
+.profile-core span {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #5c4614;
+}
+
+.profile-tag {
+  position: absolute;
+  z-index: 3;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(81, 63, 21, 0.08);
+  box-shadow: 0 12px 24px rgba(93, 72, 24, 0.06);
+  color: var(--text);
+}
+
+.tag-one {
+  top: 18%;
+  left: 10%;
+}
+
+.tag-two {
+  top: 24%;
+  right: 10%;
+}
+
+.tag-three {
+  bottom: 18%;
+  left: 16%;
+}
+
+.about-panels {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 22px;
 }
 
-.principle h3 {
+.about-panel {
+  padding: 28px 24px;
+}
+
+.about-panel h3 {
   margin: 0 0 14px;
   font-size: 1.2rem;
+  letter-spacing: -0.02em;
 }
 
-.principle p {
+.about-panel p {
   margin: 0;
   color: var(--muted);
   line-height: 1.85;
 }
 
-@media (max-width: 940px) {
-  .about-layout,
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.principle-card {
+  padding: 28px 24px;
+}
+
+.principle-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 30px;
+  padding: 0 10px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  background: rgba(247, 239, 199, 0.76);
+  color: #6b5318;
+}
+
+.principle-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.principle-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.about-closing {
+  position: relative;
+  padding: 30px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.closing-line {
+  width: 68px;
+  height: 1px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, rgba(223, 189, 90, 0.95), rgba(223, 189, 90, 0));
+}
+
+.about-closing p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 1024px) {
+  .about-hero-grid,
+  .about-panels,
   .principles-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .about-closing {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 22px;
+  }
+
+  .about-panel,
+  .principle-card {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-title {
+    font-size: clamp(2.5rem, 14vw, 4rem);
+  }
+
+  .about-visual {
+    min-height: 340px;
+  }
+
+  .profile-frame {
+    width: 200px;
+    height: 260px;
+  }
+
+  .profile-tag {
+    font-size: 0.74rem;
+    padding: 8px 12px;
   }
 }
