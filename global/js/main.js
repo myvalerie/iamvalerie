@@ -1,86 +1,63 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const body = document.body;
-  const level = body.dataset.level || '1';
-  const page = body.dataset.page || '';
-  const prefix = level === '0' ? './' : '../';
+document.addEventListener("DOMContentLoaded", () => {
+  loadGlobalComponent("../global/components/header.html", "header", () => {
+    setActiveNavigation();
+    initializeHeaderScrollState();
+  });
 
-  await injectComponent('header', `${prefix}global/components/header.html`);
-  await injectComponent('footer', `${prefix}global/components/footer.html`);
-
-  wireRoutes(prefix, page);
-  wireHeader();
-  wireReveal();
+  loadGlobalComponent("../global/components/footer.html", "footer");
 });
 
-async function injectComponent(targetId, path) {
-  const target = document.getElementById(targetId);
-  if (!target) return;
+function loadGlobalComponent(path, targetId, callback) {
+  const targetElement = document.getElementById(targetId);
 
-  try {
-    const response = await fetch(path);
-    const html = await response.text();
-    target.innerHTML = html;
-  } catch (error) {
-    console.error(`Unable to load component: ${path}`, error);
-  }
-}
+  if (!targetElement) return;
 
-function wireRoutes(prefix, page) {
-  const routeMap = {
-    home: `${prefix}home/`,
-    about: `${prefix}about/`,
-    work: `${prefix}work/`,
-    connect: `${prefix}connect/`
-  };
-
-  document.querySelectorAll('[data-route]').forEach((link) => {
-    const route = link.dataset.route;
-    if (routeMap[route]) {
-      link.setAttribute('href', routeMap[route]);
-    }
-    if (route === page) {
-      link.classList.add('is-active');
-    }
-  });
-}
-
-function wireHeader() {
-  const header = document.getElementById('siteHeader');
-  const toggle = document.getElementById('navToggle');
-  const nav = document.querySelector('.site-nav');
-
-  const handleScroll = () => {
-    if (!header) return;
-    header.classList.toggle('is-scrolled', window.scrollY > 18);
-  };
-
-  handleScroll();
-  window.addEventListener('scroll', handleScroll, { passive: true });
-
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      nav.classList.toggle('is-open');
-      const expanded = nav.classList.contains('is-open');
-      toggle.setAttribute('aria-expanded', String(expanded));
-    });
-  }
-}
-
-function wireReveal() {
-  const items = document.querySelectorAll('.reveal');
-  if (!items.length) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+  fetch(path)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to load component: ${path}`);
       }
-    });
-  }, { threshold: 0.12 });
+      return response.text();
+    })
+    .then((html) => {
+      targetElement.innerHTML = html;
 
-  items.forEach((item, index) => {
-    item.style.transitionDelay = `${Math.min(index * 70, 320)}ms`;
-    observer.observe(item);
+      if (typeof callback === "function") {
+        callback();
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function setActiveNavigation() {
+  const navLinks = document.querySelectorAll(".nav-link");
+  const currentPath = window.location.pathname.replace(/\/+$/, "");
+
+  navLinks.forEach((link) => {
+    const linkUrl = new URL(link.href, window.location.origin);
+    const linkPath = linkUrl.pathname.replace(/\/+$/, "");
+
+    if (linkPath === currentPath) {
+      link.classList.add("is-active");
+    }
   });
+}
+
+function initializeHeaderScrollState() {
+  const header = document.querySelector(".site-header");
+
+  if (!header) return;
+
+  const updateHeaderState = () => {
+    if (window.scrollY > 24) {
+      header.classList.add("is-scrolled");
+    } else {
+      header.classList.remove("is-scrolled");
+    }
+  };
+
+  updateHeaderState();
+  window.addEventListener("scroll", updateHeaderState, { passive: true });
 }
