@@ -26,21 +26,22 @@
 
       <div class="about-hero-grid">
         <div class="about-copy">
-          <h1 class="about-title reveal">A Thoughtful Approach to Data, Systems, and Digital Work</h1>
+          <h1 class="about-title reveal">
+            Curiosity, Structure, and Analytical Thinking in Motion
+          </h1>
 
           <p class="about-lead reveal">
             I am a Computer Science student specialising in Data Analytics,
-            with a strong interest in transforming data into meaningful insight
-            through structure, clarity, and analytical thinking.
+            driven by curiosity, structured reasoning, and a strong interest in
+            understanding how systems behave beneath the surface.
           </p>
 
           <p class="about-description reveal">
-            My work spans software development, data-oriented analysis, and
-            system-based problem solving. I approach each project with an
-            emphasis on reliability, thoughtful implementation, and clear
-            communication — not only to build functional solutions, but to
-            present them in a way that is refined, understandable, and
-            purposeful.
+            My work sits at the intersection of software development, data
+            analysis, and digital presentation. I am especially drawn to
+            projects that invite exploration — where logic, patterns, and
+            technical systems can be examined, organised, and translated into
+            outcomes that are both functional and clearly communicated.
           </p>
 
           <div class="button-row reveal">
@@ -49,17 +50,23 @@
           </div>
         </div>
 
-        <div class="about-visual panel reveal">
+        <div class="about-visual panel reveal" id="aboutVisual">
           <div class="visual-glow"></div>
-          <div class="profile-frame">
-            <div class="profile-core">
-              <span>VC</span>
-            </div>
+          <div class="visual-grid"></div>
+          <div class="visual-network" id="visualNetwork"></div>
+
+          <div class="profile-frame" id="profileFrame">
+            <img
+              src="../assets/images/Valerie_ENTP.png"
+              alt="Valerie Cheong"
+              class="profile-photo"
+            />
           </div>
 
-          <div class="profile-tag tag-one">Clarity</div>
-          <div class="profile-tag tag-two">Structure</div>
-          <div class="profile-tag tag-three">Integrity</div>
+          <div class="profile-tag tag-one">Curiosity</div>
+          <div class="profile-tag tag-two">Systems</div>
+          <div class="profile-tag tag-three">Insight</div>
+          <div class="profile-tag tag-four">Structure</div>
         </div>
       </div>
     </section>
@@ -68,45 +75,88 @@
       <div class="section-heading reveal">
         <div>
           <div class="section-kicker">Profile</div>
-          <h2 class="section-title">Who I Am</h2>
+          <h2 class="section-title">How I Think</h2>
         </div>
 
         <p class="section-lead">
-          A concise overview of the mindset, values, and analytical direction
-          that shape the way I approach technical and data-focused work.
+          A concise view of the mindset, analytical direction, and working
+          principles that shape the way I approach technical and data-focused
+          work.
         </p>
       </div>
 
       <div class="about-panels">
         <article class="about-panel glass-panel reveal">
-          <h3>Background</h3>
+          <h3>Curiosity</h3>
           <p>
-            I am currently pursuing a Bachelor of Science (Honours) in Computer
-            Science with a specialism in Data Analytics. My academic experience
-            has allowed me to work across software development, predictive
-            modelling, system design, and technical implementation through a
-            variety of project-based contexts.
+            I enjoy exploring how things work beneath the surface. Rather than
+            stopping at what a system does, I am naturally interested in the
+            logic behind it — how components connect, how patterns emerge, and
+            how complex behaviour can be better understood.
           </p>
         </article>
 
         <article class="about-panel glass-panel reveal">
-          <h3>Approach</h3>
+          <h3>Analysis</h3>
           <p>
-            I value work that is structured, reliable, and thoughtfully
-            presented. Whether developing an application, analysing a dataset,
-            or solving a technical challenge, I focus on building solutions
-            that are not only functional, but clear in purpose and meaningful
-            in outcome.
+            My approach combines technical reasoning with analytical
+            interpretation. I am particularly interested in identifying
+            relationships within data, examining how systems behave, and using
+            structured thinking to transform complexity into clarity.
           </p>
         </article>
 
         <article class="about-panel glass-panel reveal">
-          <h3>Focus</h3>
+          <h3>Communication</h3>
           <p>
-            My interests centre around data analytics, digital presentation,
-            technical problem solving, and the connection between system logic
-            and human understanding. I am especially drawn to work that
-            combines analytical depth with clarity in communication.
+            I value outcomes that are not only functional, but clearly
+            expressed. Whether presenting an analysis, building a system, or
+            shaping an interface, I aim to make technical work more readable,
+            purposeful, and meaningful to others.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-heading reveal">
+        <div>
+          <div class="section-kicker">Visual Thinking</div>
+          <h2 class="section-title">Patterns, Systems, and Connections</h2>
+        </div>
+
+        <p class="section-lead">
+          I am drawn to work that requires both exploration and structure —
+          where ideas can be tested, systems can be understood, and technical
+          insight can be communicated through clear visual and analytical forms.
+        </p>
+      </div>
+
+      <div class="thinking-grid">
+        <article class="thinking-card panel reveal">
+          <div class="thinking-icon">01</div>
+          <h3>Pattern Recognition</h3>
+          <p>
+            I look for relationships, repeated behaviour, and underlying
+            structure in both data and technical systems.
+          </p>
+        </article>
+
+        <article class="thinking-card panel reveal">
+          <div class="thinking-icon">02</div>
+          <h3>System Exploration</h3>
+          <p>
+            I enjoy examining how different components interact and how logic
+            flows across a complete process or environment.
+          </p>
+        </article>
+
+        <article class="thinking-card panel reveal">
+          <div class="thinking-icon">03</div>
+          <h3>Meaningful Presentation</h3>
+          <p>
+            I believe technical work becomes stronger when complex ideas are
+            presented with order, intention, and visual clarity.
           </p>
         </article>
       </div>
@@ -120,7 +170,7 @@
         </div>
 
         <p class="section-lead">
-          The values that shape how I think, build, analyse, and present.
+          The values that shape how I think, analyse, build, and present.
         </p>
       </div>
 
@@ -161,9 +211,9 @@
       <div class="about-closing glass-panel reveal">
         <div class="closing-line"></div>
         <p>
-          I see technical work not only as a process of building and analysing,
-          but as an opportunity to create outcomes that are thoughtful,
-          reliable, and clearly expressed.
+          I see technical work as more than implementation alone. For me, it is
+          equally about understanding systems deeply, recognising patterns
+          clearly, and presenting ideas with purpose.
         </p>
       </div>
     </section>
