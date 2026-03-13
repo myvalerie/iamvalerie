@@ -1,7 +1,12 @@
-const canvas = document.getElementById('heroCanvas');
+document.addEventListener("DOMContentLoaded", () => {
+  initializeHeroCanvas();
+});
 
-if (canvas) {
-  const ctx = canvas.getContext('2d');
+function initializeHeroCanvas() {
+  const canvas = document.getElementById("heroCanvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
   const pointer = { x: 0, y: 0, active: false };
   let particles = [];
   let animationId = null;
@@ -9,20 +14,23 @@ if (canvas) {
   function resizeCanvas() {
     const ratio = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
+
     canvas.width = rect.width * ratio;
     canvas.height = rect.height * ratio;
+
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     createParticles(rect.width, rect.height);
   }
 
   function createParticles(width, height) {
     const count = Math.min(54, Math.max(34, Math.floor((width * height) / 18000)));
+
     particles = Array.from({ length: count }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.42,
       vy: (Math.random() - 0.5) * 0.42,
-      size: Math.random() * 2.2 + 1.2
+      size: Math.random() * 2.2 + 1.2,
     }));
   }
 
@@ -46,7 +54,7 @@ if (canvas) {
         p.y -= dyPointer * 0.003;
       }
 
-      for (let j = i + 1; j < particles.length; j++) {
+      for (let j = i + 1; j < particles.length; j += 1) {
         const other = particles[j];
         const dx = other.x - p.x;
         const dy = other.y - p.y;
@@ -63,8 +71,8 @@ if (canvas) {
       }
 
       const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 12);
-      gradient.addColorStop(0, 'rgba(215, 184, 89, 0.82)');
-      gradient.addColorStop(1, 'rgba(215, 184, 89, 0)');
+      gradient.addColorStop(0, "rgba(215, 184, 89, 0.82)");
+      gradient.addColorStop(1, "rgba(215, 184, 89, 0)");
 
       ctx.beginPath();
       ctx.fillStyle = gradient;
@@ -72,7 +80,7 @@ if (canvas) {
       ctx.fill();
 
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(130, 99, 29, 0.78)';
+      ctx.fillStyle = "rgba(130, 99, 29, 0.78)";
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
     });
@@ -80,21 +88,23 @@ if (canvas) {
     animationId = requestAnimationFrame(step);
   }
 
-  window.addEventListener('resize', resizeCanvas);
-  canvas.addEventListener('mousemove', (event) => {
+  window.addEventListener("resize", resizeCanvas);
+
+  canvas.addEventListener("mousemove", (event) => {
     const rect = canvas.getBoundingClientRect();
     pointer.x = event.clientX - rect.left;
     pointer.y = event.clientY - rect.top;
     pointer.active = true;
   });
-  canvas.addEventListener('mouseleave', () => {
+
+  canvas.addEventListener("mouseleave", () => {
     pointer.active = false;
   });
 
   resizeCanvas();
   step();
 
-  window.addEventListener('beforeunload', () => {
+  window.addEventListener("beforeunload", () => {
     if (animationId) cancelAnimationFrame(animationId);
   });
 }
