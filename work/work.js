@@ -58,3 +58,39 @@ tabs.forEach((tab) => {
 });
 
 renderProject(0);
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializeProjectVisualMotion();
+});
+
+function initializeProjectVisualMotion() {
+  const frames = document.querySelectorAll(".project-visual-frame");
+
+  frames.forEach((frame) => {
+    frame.addEventListener("mousemove", (event) => {
+      if (window.innerWidth <= 768) return;
+
+      const rect = frame.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateY = ((x - centerX) / centerX) * 3;
+      const rotateX = ((centerY - y) / centerY) * 3;
+
+      frame.style.transform = `
+        perspective(900px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+        translateY(-4px)
+      `;
+    });
+
+    frame.addEventListener("mouseleave", () => {
+      frame.style.transform = "";
+    });
+  });
+}
