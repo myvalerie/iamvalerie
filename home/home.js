@@ -69,7 +69,7 @@ function initializeThreeBackground() {
   ];
 
   const nearParticles = createParticleField({
-    count: 620,
+    count: 560,
     width: 16,
     height: 10,
     depth: 16,
@@ -79,7 +79,7 @@ function initializeThreeBackground() {
   });
 
   const midParticles = createParticleField({
-    count: 1450,
+    count: 1350,
     width: 28,
     height: 16,
     depth: 36,
@@ -89,7 +89,7 @@ function initializeThreeBackground() {
   });
 
   const farParticles = createParticleField({
-    count: 1850,
+    count: 1700,
     width: 48,
     height: 28,
     depth: 70,
@@ -110,9 +110,6 @@ function initializeThreeBackground() {
 
   const structuralNodes = createStructuralNodes();
   structuralNodes.forEach((mesh) => world.add(mesh));
-
-  const catMorph = createCatMorphField(880);
-  world.add(catMorph.points);
 
   function createParticleField(config) {
     const geometry = new THREE.BufferGeometry();
@@ -233,163 +230,6 @@ function initializeThreeBackground() {
     return items;
   }
 
-  function buildCatOutlinePoints(totalPoints) {
-    const points = [];
-
-    function addCurve(curvePoints, samples) {
-      for (let i = 0; i < samples; i += 1) {
-        const t = i / (samples - 1);
-        const p = curvePoints.getPoint(t);
-        points.push(p);
-      }
-    }
-
-    const leftEar = new THREE.QuadraticBezierCurve(
-      new THREE.Vector2(-1.65, 0.9),
-      new THREE.Vector2(-1.45, 1.55),
-      new THREE.Vector2(-1.02, 1.02)
-    );
-
-    const headTop = new THREE.CubicBezierCurve(
-      new THREE.Vector2(-1.02, 1.02),
-      new THREE.Vector2(-0.48, 1.32),
-      new THREE.Vector2(0.15, 1.28),
-      new THREE.Vector2(0.6, 0.96)
-    );
-
-    const rightEar = new THREE.QuadraticBezierCurve(
-      new THREE.Vector2(0.6, 0.96),
-      new THREE.Vector2(1.0, 1.56),
-      new THREE.Vector2(1.22, 0.9)
-    );
-
-    const faceFront = new THREE.CubicBezierCurve(
-      new THREE.Vector2(1.22, 0.9),
-      new THREE.Vector2(1.42, 0.52),
-      new THREE.Vector2(1.32, 0.16),
-      new THREE.Vector2(1.08, -0.06)
-    );
-
-    const chest = new THREE.CubicBezierCurve(
-      new THREE.Vector2(1.08, -0.06),
-      new THREE.Vector2(0.88, -0.34),
-      new THREE.Vector2(0.72, -0.72),
-      new THREE.Vector2(0.24, -1.22)
-    );
-
-    const back = new THREE.CubicBezierCurve(
-      new THREE.Vector2(0.24, -1.22),
-      new THREE.Vector2(-0.42, -1.1),
-      new THREE.Vector2(-1.08, -0.66),
-      new THREE.Vector2(-1.54, -0.08)
-    );
-
-    const neckInner = new THREE.CubicBezierCurve(
-      new THREE.Vector2(-0.35, 0.54),
-      new THREE.Vector2(0.02, 0.36),
-      new THREE.Vector2(0.42, 0.24),
-      new THREE.Vector2(0.86, 0.02)
-    );
-
-    const tail = new THREE.CubicBezierCurve3(
-      new THREE.Vector3(-1.5, -0.08, 0),
-      new THREE.Vector3(-2.45, 0.28, 0),
-      new THREE.Vector3(-2.05, 1.5, 0),
-      new THREE.Vector3(-0.94, 1.72, 0)
-    );
-
-    addCurve(leftEar, 95);
-    addCurve(headTop, 130);
-    addCurve(rightEar, 95);
-    addCurve(faceFront, 110);
-    addCurve(chest, 120);
-    addCurve(back, 120);
-    addCurve(neckInner, 80);
-
-    for (let i = 0; i < 130; i += 1) {
-      const t = i / 129;
-      const p = tail.getPoint(t);
-      points.push(new THREE.Vector2(p.x, p.y));
-    }
-
-    const fillers = [];
-    for (let i = 0; i < points.length; i += 1) {
-      const p = points[i];
-      if (i % 3 === 0) {
-        fillers.push(new THREE.Vector2(p.x * 0.82, p.y * 0.82));
-      }
-      if (i % 5 === 0) {
-        fillers.push(new THREE.Vector2(p.x * 0.62, p.y * 0.62));
-      }
-    }
-
-    const merged = points.concat(fillers);
-
-    while (merged.length < totalPoints) {
-      const source = merged[Math.floor(Math.random() * merged.length)];
-      merged.push(
-        new THREE.Vector2(
-          source.x + (Math.random() - 0.5) * 0.08,
-          source.y + (Math.random() - 0.5) * 0.08
-        )
-      );
-    }
-
-    return merged.slice(0, totalPoints);
-  }
-
-  function createCatMorphField(count) {
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    const basePositions = new Float32Array(count * 3);
-    const targetPositions = new Float32Array(count * 3);
-
-    const outlinePoints = buildCatOutlinePoints(count);
-
-    for (let i = 0; i < count; i += 1) {
-      const freeX = (Math.random() - 0.5) * 6.8;
-      const freeY = (Math.random() - 0.5) * 4.8;
-      const freeZ = -2 - Math.random() * 4.4;
-
-      positions[i * 3] = freeX;
-      positions[i * 3 + 1] = freeY;
-      positions[i * 3 + 2] = freeZ;
-
-      basePositions[i * 3] = freeX;
-      basePositions[i * 3 + 1] = freeY;
-      basePositions[i * 3 + 2] = freeZ;
-
-      const outline = outlinePoints[i];
-      targetPositions[i * 3] = outline.x * 1.36;
-      targetPositions[i * 3 + 1] = outline.y * 1.36;
-      targetPositions[i * 3 + 2] = -3.2 + (Math.random() - 0.5) * 0.6;
-    }
-
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-    const material = new THREE.PointsMaterial({
-      color: new THREE.Color("#99CDD8"),
-      size: 0.072,
-      transparent: true,
-      opacity: 0.68,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      sizeAttenuation: true,
-    });
-
-    const points = new THREE.Points(geometry, material);
-    points.position.set(0.2, 0.2, -1.2);
-
-    return {
-      geometry,
-      material,
-      points,
-      basePositions,
-      targetPositions,
-      count,
-    };
-  }
-
   function getCyclingColors(elapsed) {
     const t1 = (Math.sin(elapsed * 0.10) + 1) / 2;
     const t2 = (Math.sin(elapsed * 0.07 + 1.8) + 1) / 2;
@@ -402,66 +242,11 @@ function initializeThreeBackground() {
     return { colorA, colorB, colorC };
   }
 
-  function updateCatMorph(elapsed, colorA, colorB, colorC) {
-    const morphCycle = 18.0;
-    const phase = elapsed % morphCycle;
-
-    let morphStrength = 0;
-
-    if (phase < 5.5) {
-      morphStrength = 0;
-    } else if (phase < 8.8) {
-      morphStrength = (phase - 5.5) / 3.3;
-    } else if (phase < 11.6) {
-      morphStrength = 1;
-    } else if (phase < 15.4) {
-      morphStrength = 1 - (phase - 11.6) / 3.8;
-    } else {
-      morphStrength = 0;
-    }
-
-    const positionAttribute = catMorph.geometry.attributes.position;
-    const array = positionAttribute.array;
-
-    for (let i = 0; i < catMorph.count; i += 1) {
-      const baseX = catMorph.basePositions[i * 3];
-      const baseY = catMorph.basePositions[i * 3 + 1];
-      const baseZ = catMorph.basePositions[i * 3 + 2];
-
-      const targetX = catMorph.targetPositions[i * 3];
-      const targetY = catMorph.targetPositions[i * 3 + 1];
-      const targetZ = catMorph.targetPositions[i * 3 + 2];
-
-      const driftX = Math.sin(elapsed * 0.6 + i * 0.037) * 0.08;
-      const driftY = Math.cos(elapsed * 0.54 + i * 0.041) * 0.08;
-      const driftZ = Math.sin(elapsed * 0.42 + i * 0.029) * 0.05;
-
-      const freeX = baseX + driftX;
-      const freeY = baseY + driftY;
-      const freeZ = baseZ + driftZ;
-
-      array[i * 3] =
-        freeX * (1 - morphStrength) +
-        (targetX + pointer.x * 0.26) * morphStrength;
-
-      array[i * 3 + 1] =
-        freeY * (1 - morphStrength) +
-        (targetY + pointer.y * 0.18) * morphStrength;
-
-      array[i * 3 + 2] =
-        freeZ * (1 - morphStrength) +
-        targetZ * morphStrength;
-    }
-
-    positionAttribute.needsUpdate = true;
-
-    const blendColor = colorA.clone().lerp(colorB, 0.45).lerp(colorC, 0.2);
-    catMorph.material.color.copy(blendColor);
-    catMorph.material.opacity = 0.24 + morphStrength * 0.58;
-    catMorph.material.size = 0.058 + morphStrength * 0.022;
-
-    catMorph.points.rotation.z = Math.sin(elapsed * 0.08) * 0.05;
-    catMorph.points.rotation.y = pointer.x * 0.08;
+  function syncCssColors(colorA, colorB, colorC) {
+    const root = document.documentElement;
+    root.style.setProperty("--glow-dynamic-a", colorA.getStyle());
+    root.style.setProperty("--glow-dynamic-b", colorB.getStyle());
+    root.style.setProperty("--glow-dynamic-c", colorC.getStyle());
   }
 
   function animate() {
@@ -494,7 +279,7 @@ function initializeThreeBackground() {
       else mesh.material.color.copy(palette[5]);
     });
 
-    updateCatMorph(elapsed, colorA, colorB, colorC);
+    syncCssColors(colorA, colorB, colorC);
 
     camera.position.x = pointer.x * 0.85;
     camera.position.y = 0.2 + pointer.y * 0.5;
@@ -582,8 +367,5 @@ function initializeThreeBackground() {
       mesh.geometry.dispose();
       mesh.material.dispose();
     });
-
-    catMorph.geometry.dispose();
-    catMorph.material.dispose();
   });
 }
