@@ -32,7 +32,7 @@ function initializeThreeBackground() {
   );
   camera.position.set(0, 0.2, 18);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.08);
   scene.add(ambientLight);
 
   const pointLightA = new THREE.PointLight(0x99cdd8, 2.8, 90, 2);
@@ -59,26 +59,33 @@ function initializeThreeBackground() {
 
   const clock = new THREE.Clock();
 
-  const colorState = {
-    hue: 192,
-  };
+  const palette = [
+    new THREE.Color("#99CDD8"),
+    new THREE.Color("#DAE813"),
+    new THREE.Color("#FED8D3"),
+    new THREE.Color("#F3C382"),
+    new THREE.Color("#CF06C4"),
+    new THREE.Color("#657166"),
+  ];
 
   const nearParticles = createParticleField({
-    count: 520,
+    count: 560,
     width: 16,
     height: 10,
     depth: 16,
     size: 0.06,
     opacity: 0.42,
+    color: "#99CDD8",
   });
 
   const midParticles = createParticleField({
-    count: 1300,
+    count: 1350,
     width: 28,
     height: 16,
     depth: 36,
     size: 0.042,
     opacity: 0.24,
+    color: "#F3C382",
   });
 
   const farParticles = createParticleField({
@@ -88,6 +95,7 @@ function initializeThreeBackground() {
     depth: 70,
     size: 0.028,
     opacity: 0.12,
+    color: "#FED8D3",
   });
 
   world.add(nearParticles.points);
@@ -116,7 +124,7 @@ function initializeThreeBackground() {
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
     const material = new THREE.PointsMaterial({
-      color: 0x99cdd8,
+      color: new THREE.Color(config.color),
       size: config.size,
       transparent: true,
       opacity: config.opacity,
@@ -126,21 +134,20 @@ function initializeThreeBackground() {
     });
 
     const points = new THREE.Points(geometry, material);
-
     return { geometry, material, points };
   }
 
   function createArcRings() {
     const configs = [
-      { radius: 4.8, tube: 0.045, x: 0.8, y: 1.2, z: -6.4, rx: 1.02, ry: 0.16, rz: 0.28, opacity: 0.11 },
-      { radius: 7.2, tube: 0.032, x: -0.4, y: -0.2, z: -12.8, rx: 1.12, ry: -0.1, rz: -0.34, opacity: 0.08 },
-      { radius: 9.6, tube: 0.024, x: 0.2, y: 0.6, z: -18.2, rx: 0.96, ry: 0.04, rz: 0.08, opacity: 0.05 },
+      { radius: 4.8, tube: 0.045, x: 0.8, y: 1.2, z: -6.4, rx: 1.02, ry: 0.16, rz: 0.28, opacity: 0.11, color: "#99CDD8" },
+      { radius: 7.2, tube: 0.032, x: -0.4, y: -0.2, z: -12.8, rx: 1.12, ry: -0.1, rz: -0.34, opacity: 0.08, color: "#CF06C4" },
+      { radius: 9.6, tube: 0.024, x: 0.2, y: 0.6, z: -18.2, rx: 0.96, ry: 0.04, rz: 0.08, opacity: 0.05, color: "#F3C382" },
     ];
 
-    return configs.map((config, index) => {
+    return configs.map((config) => {
       const geometry = new THREE.TorusGeometry(config.radius, config.tube, 24, 220);
       const material = new THREE.MeshBasicMaterial({
-        color: index === 0 ? 0x99cdd8 : index === 1 ? 0xcf06c4 : 0xf3c382,
+        color: new THREE.Color(config.color),
         transparent: true,
         opacity: config.opacity,
         blending: THREE.AdditiveBlending,
@@ -162,15 +169,16 @@ function initializeThreeBackground() {
 
   function createGlowSpheres() {
     const configs = [
-      { size: 1.8, x: -5.2, y: 3.0, z: -10.4, color: 0x99cdd8, opacity: 0.06 },
-      { size: 1.2, x: 5.2, y: -2.0, z: -8.8, color: 0xcf06c4, opacity: 0.06 },
-      { size: 2.4, x: 1.2, y: 4.0, z: -17.8, color: 0xf3c382, opacity: 0.04 },
+      { size: 1.8, x: -5.2, y: 3.0, z: -10.4, color: "#99CDD8", opacity: 0.06 },
+      { size: 1.2, x: 5.2, y: -2.0, z: -8.8, color: "#CF06C4", opacity: 0.06 },
+      { size: 2.4, x: 1.2, y: 4.0, z: -17.8, color: "#F3C382", opacity: 0.04 },
+      { size: 1.1, x: -2.4, y: -3.2, z: -13.0, color: "#FED8D3", opacity: 0.04 },
     ];
 
     return configs.map((config) => {
       const geometry = new THREE.SphereGeometry(config.size, 32, 32);
       const material = new THREE.MeshBasicMaterial({
-        color: config.color,
+        color: new THREE.Color(config.color),
         transparent: true,
         opacity: config.opacity,
         blending: THREE.AdditiveBlending,
@@ -193,11 +201,12 @@ function initializeThreeBackground() {
     const items = [];
     const geometry = new THREE.IcosahedronGeometry(0.09, 0);
 
-    for (let i = 0; i < 28; i += 1) {
+    for (let i = 0; i < 30; i += 1) {
+      const color = palette[i % palette.length];
       const material = new THREE.MeshBasicMaterial({
-        color: i % 3 === 0 ? 0xdae813 : i % 3 === 1 ? 0x99cdd8 : 0xcf06c4,
+        color: color.clone(),
         transparent: true,
-        opacity: 0.22,
+        opacity: i % 6 === 1 ? 0.26 : 0.2,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
@@ -221,37 +230,19 @@ function initializeThreeBackground() {
     return items;
   }
 
-  function setHueShift(targetHue) {
-    const hueA = ((targetHue % 360) + 360) % 360;
-    const hueB = (hueA + 72) % 360;
-    const hueC = (hueA + 140) % 360;
+  function getCyclingColors(elapsed) {
+    const t1 = (Math.sin(elapsed * 0.10) + 1) / 2;
+    const t2 = (Math.sin(elapsed * 0.07 + 1.8) + 1) / 2;
+    const t3 = (Math.sin(elapsed * 0.05 + 3.2) + 1) / 2;
 
-    const colorA = new THREE.Color().setHSL(hueA / 360, 0.72, 0.72);
-    const colorB = new THREE.Color().setHSL(hueB / 360, 0.76, 0.58);
-    const colorC = new THREE.Color().setHSL(hueC / 360, 0.78, 0.64);
+    const colorA = new THREE.Color().copy(palette[0]).lerp(palette[4], t1).lerp(palette[2], t2 * 0.22);
+    const colorB = new THREE.Color().copy(palette[3]).lerp(palette[1], t2 * 0.55).lerp(palette[4], t1 * 0.25);
+    const colorC = new THREE.Color().copy(palette[2]).lerp(palette[0], t3 * 0.6).lerp(palette[5], 0.12);
 
-    nearParticles.material.color.copy(colorC);
-    midParticles.material.color.copy(colorA);
-    farParticles.material.color.copy(colorB);
+    return { colorA, colorB, colorC };
+  }
 
-    arcRings[0].material.color.copy(colorA);
-    arcRings[1].material.color.copy(colorB);
-    arcRings[2].material.color.copy(colorC);
-
-    glowSpheres[0].material.color.copy(colorA);
-    glowSpheres[1].material.color.copy(colorB);
-    glowSpheres[2].material.color.copy(colorC);
-
-    structuralNodes.forEach((mesh, index) => {
-      if (index % 3 === 0) {
-        mesh.material.color.copy(colorA);
-      } else if (index % 3 === 1) {
-        mesh.material.color.copy(colorB);
-      } else {
-        mesh.material.color.copy(colorC);
-      }
-    });
-
+  function syncCssColors(colorA, colorB, colorC) {
     const root = document.documentElement;
     root.style.setProperty("--glow-dynamic-a", colorA.getStyle());
     root.style.setProperty("--glow-dynamic-b", colorB.getStyle());
@@ -264,8 +255,31 @@ function initializeThreeBackground() {
     pointer.x += (pointer.targetX - pointer.x) * 0.035;
     pointer.y += (pointer.targetY - pointer.y) * 0.035;
 
-    colorState.hue = 192 + Math.sin(elapsed * 0.08) * 42 + Math.cos(elapsed * 0.03) * 18;
-    setHueShift(colorState.hue);
+    const { colorA, colorB, colorC } = getCyclingColors(elapsed);
+
+    nearParticles.material.color.copy(colorA);
+    midParticles.material.color.copy(colorB);
+    farParticles.material.color.copy(colorC);
+
+    arcRings[0].material.color.copy(colorA);
+    arcRings[1].material.color.copy(colorB);
+    arcRings[2].material.color.copy(colorC);
+
+    glowSpheres[0].material.color.copy(colorA);
+    glowSpheres[1].material.color.copy(colorB);
+    glowSpheres[2].material.color.copy(colorC);
+    glowSpheres[3].material.color.copy(palette[2]);
+
+    structuralNodes.forEach((mesh, index) => {
+      if (index % 6 === 0) mesh.material.color.copy(colorA);
+      else if (index % 6 === 1) mesh.material.color.copy(palette[1]);
+      else if (index % 6 === 2) mesh.material.color.copy(palette[2]);
+      else if (index % 6 === 3) mesh.material.color.copy(colorB);
+      else if (index % 6 === 4) mesh.material.color.copy(colorC);
+      else mesh.material.color.copy(palette[5]);
+    });
+
+    syncCssColors(colorA, colorB, colorC);
 
     camera.position.x = pointer.x * 0.85;
     camera.position.y = 0.2 + pointer.y * 0.5;
