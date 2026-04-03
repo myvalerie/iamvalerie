@@ -1,4 +1,20 @@
-about/
+project-root/
+│
+├── index.html
+├── README.md
+├── FolderStructure.txt
+│
+├── global/
+│   ├── components/
+│   │   ├── header.html
+│   │   └── footer.html
+│   │
+│   ├── css/
+│   │   ├── base.css
+│   │   └── layout.css
+│   │
+│   └── js/
+│       └── main.js
 │
 ├── assets/
 │   └── images/
@@ -9,7 +25,7 @@ about/
 │       ├── Badge_NALAT.png
 │       ├── Badge_RHSA1.png
 │       ├── Badge_RHSA2.png
-│       │
+│
 │       ├── TE_ApacheNetbeans.png
 │       ├── TE_ASP.NET.png
 │       ├── TE_Assembly.png
@@ -32,6 +48,32 @@ about/
 │       ├── TE_SQLServer.png
 │       ├── TE_Ubuntu.png
 │       ├── TE_VisualStudio.png
-│       └── TE_VisualStudioCode.png
+│       ├── TE_VisualStudioCode.png
+│
+│       ├── Valerie_ENTP.png
+│       └── Valerie_Pixar.png
+│
+├── home/
+│   ├── index.html
+│   ├── home.css
+│   └── home.js
+│
+├── about/
+│   ├── index.html
+│   ├── about.css
+│   └── about.js
+│
+├── work/
+│   ├── index.html
+│   ├── work.css
+│   └── work.js
+│
+├── toolkit/
+│   ├── index.html
+│   ├── toolkit.css
+│   └── toolkit.js
 │
 └── connect/
+    ├── index.html
+    ├── connect.css
+    └── connect.js
