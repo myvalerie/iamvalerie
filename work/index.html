@@ -14,10 +14,19 @@
 
   <link rel="stylesheet" href="../global/css/base.css" />
   <link rel="stylesheet" href="../global/css/layout.css" />
-  <link rel="stylesheet" href="work.css" />
+  <link rel="stylesheet" href="./work.css" />
 </head>
 
-<body data-level="1" data-page="work">
+<body data-level="1" data-page="work" class="page-shell work-body">
+  <div class="work-page-background" aria-hidden="true">
+    <div id="workThreeBackground"></div>
+    <div class="work-bg-light light-a"></div>
+    <div class="work-bg-light light-b"></div>
+    <div class="work-bg-light light-c"></div>
+    <div class="work-bg-grain"></div>
+    <div class="work-bg-vignette"></div>
+  </div>
+
   <div id="header"></div>
 
   <main class="work-page">
@@ -26,7 +35,9 @@
 
       <div class="work-hero-grid">
         <div class="work-hero-copy">
-          <h1 class="work-title reveal">Selected Work Shaped by Analysis, Structure, and Implementation</h1>
+          <h1 class="work-title reveal">
+            Selected Work Shaped by Analysis, Structure, and Implementation
+          </h1>
 
           <p class="work-lead reveal">
             A curated selection of projects that reflect my work across data
@@ -40,11 +51,32 @@
             interactive applications to analysing data, interpreting results,
             and presenting outcomes with clarity.
           </p>
+
+          <div class="work-signals reveal">
+            <article>
+              <strong>Curated</strong>
+              <span>Each project is selected with intention</span>
+            </article>
+
+            <article>
+              <strong>Structured</strong>
+              <span>Clear logic, flow, and technical organisation</span>
+            </article>
+
+            <article>
+              <strong>Presentable</strong>
+              <span>Built to communicate, not only to function</span>
+            </article>
+          </div>
         </div>
 
-        <div class="work-hero-visual panel reveal">
-          <div class="hero-orbit orbit-one"></div>
-          <div class="hero-orbit orbit-two"></div>
+        <div class="work-hero-visual panel reveal" id="workHeroVisual">
+          <div class="hero-gallery-plane plane-back"></div>
+          <div class="hero-gallery-plane plane-middle"></div>
+          <div class="hero-gallery-plane plane-front"></div>
+
+          <div class="hero-light-beam beam-one"></div>
+          <div class="hero-light-beam beam-two"></div>
 
           <div class="hero-core">
             <span>Work</span>
@@ -54,6 +86,14 @@
           <div class="hero-node node-two">Data</div>
           <div class="hero-node node-three">Logic</div>
           <div class="hero-node node-four">Design</div>
+
+          <div class="hero-visual-note glass-panel">
+            <span class="hero-visual-kicker">Gallery Engine</span>
+            <p>
+              A spatial showcase environment shaped by floating display planes,
+              soft light sweeps, and archive-like depth.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -76,17 +116,29 @@
         <article class="project-card panel reveal">
           <div class="project-card-grid">
             <div class="project-visual">
-              <div class="project-visual-frame">
+              <div class="project-visual-frame analytics-visual">
                 <span class="project-badge">Predictive Analytics</span>
+
+                <div class="project-chart-glow"></div>
+
                 <div class="project-metric-grid">
                   <div class="metric-block">
                     <span class="metric-label">Focus</span>
                     <strong>Classification</strong>
                   </div>
+
                   <div class="metric-block">
                     <span class="metric-label">Approach</span>
                     <strong>Model Evaluation</strong>
                   </div>
+                </div>
+
+                <div class="project-bars">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
               </div>
             </div>
@@ -126,10 +178,15 @@
             <div class="project-visual">
               <div class="project-visual-frame system-visual">
                 <span class="project-badge">Concurrent Systems</span>
+
                 <div class="flow-lines">
                   <span></span>
                   <span></span>
                   <span></span>
+                </div>
+
+                <div class="system-nodes">
+                  <i></i><i></i><i></i><i></i>
                 </div>
               </div>
             </div>
@@ -169,10 +226,12 @@
             <div class="project-visual">
               <div class="project-visual-frame web-visual">
                 <span class="project-badge">Web Application</span>
+
                 <div class="browser-shell">
                   <div class="browser-top">
                     <span></span><span></span><span></span>
                   </div>
+
                   <div class="browser-body">
                     <div class="browser-panel"></div>
                     <div class="browser-panel short"></div>
@@ -229,6 +288,6 @@
   <div id="footer"></div>
 
   <script src="../global/js/main.js"></script>
-  <script src="work.js"></script>
+  <script type="module" src="./work.js"></script>
 </body>
 </html>
