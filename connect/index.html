@@ -17,13 +17,28 @@
   <link rel="stylesheet" href="./connect.css" />
 </head>
 
-<body data-page="connect" data-level="1" class="page-shell">
+<body data-page="connect" data-level="1" class="page-shell connect-body">
+  <div class="connect-page-background" aria-hidden="true">
+    <div id="connectThreeBackground"></div>
+    <div class="connect-bg-pulse pulse-a"></div>
+    <div class="connect-bg-pulse pulse-b"></div>
+    <div class="connect-bg-pulse pulse-c"></div>
+    <div class="connect-bg-noise"></div>
+    <div class="connect-bg-vignette"></div>
+  </div>
+
   <div id="header"></div>
 
   <main class="connect-page">
     <section class="section shell connect-section">
-      <div class="connect-card glass-panel reveal">
+      <div class="connect-card glass-panel reveal" id="connectCard">
         <div class="section-kicker">Connect</div>
+
+        <div class="connect-rings ring-one"></div>
+        <div class="connect-rings ring-two"></div>
+        <div class="connect-rings ring-three"></div>
+
+        <div class="connect-signal-node"></div>
 
         <h1 class="section-title">A Clear and Refined Final Touchpoint</h1>
 
@@ -37,6 +52,7 @@
           <a class="connect-link" href="mailto:hello@example.com">
             <span>Email</span>
             <small>Professional enquiries</small>
+            <i class="link-ping"></i>
           </a>
 
           <a
@@ -47,6 +63,7 @@
           >
             <span>LinkedIn</span>
             <small>Public profile</small>
+            <i class="link-ping"></i>
           </a>
 
           <a
@@ -57,6 +74,7 @@
           >
             <span>GitHub</span>
             <small>Project source</small>
+            <i class="link-ping"></i>
           </a>
         </div>
 
@@ -74,6 +92,6 @@
   <div id="footer"></div>
 
   <script src="../global/js/main.js"></script>
-  <script src="./connect.js"></script>
+  <script type="module" src="./connect.js"></script>
 </body>
 </html>
