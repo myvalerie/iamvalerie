@@ -16,91 +16,92 @@ function initializeThreeBackground() {
     powerPreference: "high-performance",
   });
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0xfed8d3, 0.022);
+  scene.fog = new THREE.FogExp2(0x080c17, 0.028);
 
   const camera = new THREE.PerspectiveCamera(
     42,
     window.innerWidth / window.innerHeight,
     0.1,
-    200
+    220
   );
-  camera.position.set(0, 0, 18);
+  camera.position.set(0, 0.2, 18);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
   scene.add(ambientLight);
 
-  const lightA = new THREE.PointLight(0x99cdd8, 2.8, 100, 2);
-  lightA.position.set(-9, 5, 10);
-  scene.add(lightA);
+  const pointLightA = new THREE.PointLight(0x99cdd8, 2.8, 90, 2);
+  pointLightA.position.set(-10, 4, 8);
+  scene.add(pointLightA);
 
-  const lightB = new THREE.PointLight(0xcf06c4, 1.9, 80, 2);
-  lightB.position.set(8, -1, 8);
-  scene.add(lightB);
+  const pointLightB = new THREE.PointLight(0xcf06c4, 2.2, 80, 2);
+  pointLightB.position.set(8, -2, 10);
+  scene.add(pointLightB);
 
-  const lightC = new THREE.PointLight(0xf3c382, 1.8, 90, 2);
-  lightC.position.set(0, -7, 12);
-  scene.add(lightC);
+  const pointLightC = new THREE.PointLight(0xf3c382, 1.8, 90, 2);
+  pointLightC.position.set(0, -8, 14);
+  scene.add(pointLightC);
 
   const world = new THREE.Group();
   scene.add(world);
 
   const pointer = {
-    currentX: 0,
-    currentY: 0,
+    x: 0,
+    y: 0,
     targetX: 0,
     targetY: 0,
   };
 
   const clock = new THREE.Clock();
 
-  const nearDust = createParticleField({
-    count: 720,
-    width: 18,
+  const colorState = {
+    hue: 192,
+  };
+
+  const nearParticles = createParticleField({
+    count: 520,
+    width: 16,
     height: 10,
-    depth: 18,
-    color: 0xf3c382,
-    opacity: 0.34,
-    size: 0.05,
+    depth: 16,
+    size: 0.06,
+    opacity: 0.42,
   });
 
-  const farDust = createParticleField({
-    count: 1100,
-    width: 34,
-    height: 18,
-    depth: 44,
-    color: 0x99cdd8,
-    opacity: 0.13,
-    size: 0.032,
+  const midParticles = createParticleField({
+    count: 1300,
+    width: 28,
+    height: 16,
+    depth: 36,
+    size: 0.042,
+    opacity: 0.24,
   });
 
-  const blushDust = createParticleField({
-    count: 560,
-    width: 24,
-    height: 14,
-    depth: 26,
-    color: 0xfed8d3,
+  const farParticles = createParticleField({
+    count: 1700,
+    width: 48,
+    height: 28,
+    depth: 70,
+    size: 0.028,
     opacity: 0.12,
-    size: 0.038,
   });
 
-  world.add(nearDust.points);
-  world.add(farDust.points);
-  world.add(blushDust.points);
+  world.add(nearParticles.points);
+  world.add(midParticles.points);
+  world.add(farParticles.points);
 
-  const silkLayers = createSilkLayers();
-  silkLayers.forEach((layer) => world.add(layer.mesh));
+  const arcRings = createArcRings();
+  arcRings.forEach((mesh) => world.add(mesh));
 
-  const haloLayers = createHaloLayers();
-  haloLayers.forEach((halo) => world.add(halo));
+  const glowSpheres = createGlowSpheres();
+  glowSpheres.forEach((mesh) => world.add(mesh));
 
-  const glowOrbs = createGlowOrbs();
-  glowOrbs.forEach((orb) => world.add(orb));
+  const structuralNodes = createStructuralNodes();
+  structuralNodes.forEach((mesh) => world.add(mesh));
 
   function createParticleField(config) {
     const geometry = new THREE.BufferGeometry();
@@ -115,7 +116,7 @@ function initializeThreeBackground() {
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
     const material = new THREE.PointsMaterial({
-      color: config.color,
+      color: 0x99cdd8,
       size: config.size,
       transparent: true,
       opacity: config.opacity,
@@ -126,153 +127,20 @@ function initializeThreeBackground() {
 
     const points = new THREE.Points(geometry, material);
 
-    return { points, geometry, material };
+    return { geometry, material, points };
   }
 
-  function createSilkMesh(config) {
-    const geometry = new THREE.PlaneGeometry(
-      config.width,
-      config.height,
-      config.segmentsX,
-      config.segmentsY
-    );
-
-    const material = new THREE.MeshBasicMaterial({
-      color: config.color,
-      transparent: true,
-      opacity: config.opacity,
-      blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(config.x, config.y, config.z);
-    mesh.rotation.set(config.rx, config.ry, config.rz);
-
-    mesh.userData = {
-      basePositions: geometry.attributes.position.array.slice(),
-      strengthA: config.strengthA,
-      strengthB: config.strengthB,
-      speedA: config.speedA,
-      speedB: config.speedB,
-      phase: config.phase,
-      drift: config.drift,
-      baseY: config.y,
-      pointerFactorX: config.pointerFactorX,
-      pointerFactorY: config.pointerFactorY,
-    };
-
-    return { mesh, geometry, material };
-  }
-
-  function createSilkLayers() {
+  function createArcRings() {
     const configs = [
-      {
-        width: 24,
-        height: 11,
-        segmentsX: 140,
-        segmentsY: 90,
-        x: -1.8,
-        y: 1.2,
-        z: -4,
-        rx: -0.62,
-        ry: 0.48,
-        rz: -0.12,
-        color: 0xcf06c4,
-        opacity: 0.08,
-        strengthA: 0.55,
-        strengthB: 0.28,
-        speedA: 0.42,
-        speedB: 0.25,
-        phase: 0.0,
-        drift: 0.7,
-        pointerFactorX: 0.24,
-        pointerFactorY: 0.12,
-      },
-      {
-        width: 22,
-        height: 10,
-        segmentsX: 132,
-        segmentsY: 84,
-        x: 2.2,
-        y: -0.8,
-        z: -7.2,
-        rx: -0.54,
-        ry: -0.34,
-        rz: 0.18,
-        color: 0xf3c382,
-        opacity: 0.09,
-        strengthA: 0.48,
-        strengthB: 0.22,
-        speedA: 0.35,
-        speedB: 0.2,
-        phase: 1.4,
-        drift: 0.9,
-        pointerFactorX: 0.18,
-        pointerFactorY: 0.1,
-      },
-      {
-        width: 28,
-        height: 12,
-        segmentsX: 120,
-        segmentsY: 76,
-        x: 0.4,
-        y: 0.2,
-        z: -11.5,
-        rx: -0.42,
-        ry: 0.12,
-        rz: -0.06,
-        color: 0x99cdd8,
-        opacity: 0.08,
-        strengthA: 0.42,
-        strengthB: 0.18,
-        speedA: 0.26,
-        speedB: 0.16,
-        phase: 2.2,
-        drift: 0.4,
-        pointerFactorX: 0.1,
-        pointerFactorY: 0.06,
-      },
+      { radius: 4.8, tube: 0.045, x: 0.8, y: 1.2, z: -6.4, rx: 1.02, ry: 0.16, rz: 0.28, opacity: 0.11 },
+      { radius: 7.2, tube: 0.032, x: -0.4, y: -0.2, z: -12.8, rx: 1.12, ry: -0.1, rz: -0.34, opacity: 0.08 },
+      { radius: 9.6, tube: 0.024, x: 0.2, y: 0.6, z: -18.2, rx: 0.96, ry: 0.04, rz: 0.08, opacity: 0.05 },
     ];
 
-    return configs.map((config) => createSilkMesh(config));
-  }
-
-  function createHaloLayers() {
-    const items = [];
-
-    const configs = [
-      {
-        radius: 6.8,
-        tube: 0.045,
-        color: 0x99cdd8,
-        opacity: 0.07,
-        x: 1.0,
-        y: 1.3,
-        z: -10.8,
-        rx: 1.02,
-        ry: 0.16,
-        rz: 0.18,
-      },
-      {
-        radius: 4.6,
-        tube: 0.038,
-        color: 0xdae813,
-        opacity: 0.08,
-        x: -0.6,
-        y: 0.2,
-        z: -6.2,
-        rx: 0.94,
-        ry: -0.18,
-        rz: -0.32,
-      },
-    ];
-
-    configs.forEach((config) => {
+    return configs.map((config, index) => {
       const geometry = new THREE.TorusGeometry(config.radius, config.tube, 24, 220);
       const material = new THREE.MeshBasicMaterial({
-        color: config.color,
+        color: index === 0 ? 0x99cdd8 : index === 1 ? 0xcf06c4 : 0xf3c382,
         transparent: true,
         opacity: config.opacity,
         blending: THREE.AdditiveBlending,
@@ -285,25 +153,21 @@ function initializeThreeBackground() {
       mesh.userData = {
         baseX: config.x,
         baseY: config.y,
-        speed: 0.08 + Math.random() * 0.04,
-        drift: Math.random() * Math.PI * 2,
+        speedX: (Math.random() * 0.04 + 0.01) * (Math.random() > 0.5 ? 1 : -1),
+        speedY: (Math.random() * 0.04 + 0.01) * (Math.random() > 0.5 ? 1 : -1),
       };
-      items.push(mesh);
+      return mesh;
     });
-
-    return items;
   }
 
-  function createGlowOrbs() {
-    const items = [];
-
+  function createGlowSpheres() {
     const configs = [
-      { size: 1.8, x: -5.8, y: 3.4, z: -9.4, color: 0xfed8d3, opacity: 0.08 },
-      { size: 1.2, x: 5.2, y: -2.4, z: -8.8, color: 0xcf06c4, opacity: 0.05 },
-      { size: 2.2, x: 1.2, y: 4.2, z: -14.6, color: 0x99cdd8, opacity: 0.05 },
+      { size: 1.8, x: -5.2, y: 3.0, z: -10.4, color: 0x99cdd8, opacity: 0.06 },
+      { size: 1.2, x: 5.2, y: -2.0, z: -8.8, color: 0xcf06c4, opacity: 0.06 },
+      { size: 2.4, x: 1.2, y: 4.0, z: -17.8, color: 0xf3c382, opacity: 0.04 },
     ];
 
-    configs.forEach((config) => {
+    return configs.map((config) => {
       const geometry = new THREE.SphereGeometry(config.size, 32, 32);
       const material = new THREE.MeshBasicMaterial({
         color: config.color,
@@ -318,98 +182,123 @@ function initializeThreeBackground() {
       mesh.userData = {
         baseX: config.x,
         baseY: config.y,
-        speed: 0.12 + Math.random() * 0.06,
+        speed: 0.12 + Math.random() * 0.08,
+        drift: Math.random() * Math.PI * 2,
+      };
+      return mesh;
+    });
+  }
+
+  function createStructuralNodes() {
+    const items = [];
+    const geometry = new THREE.IcosahedronGeometry(0.09, 0);
+
+    for (let i = 0; i < 28; i += 1) {
+      const material = new THREE.MeshBasicMaterial({
+        color: i % 3 === 0 ? 0xdae813 : i % 3 === 1 ? 0x99cdd8 : 0xcf06c4,
+        transparent: true,
+        opacity: 0.22,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(
+        (Math.random() - 0.5) * 16,
+        (Math.random() - 0.5) * 9,
+        -4 - Math.random() * 18
+      );
+      mesh.scale.setScalar(Math.random() * 1.2 + 0.5);
+      mesh.userData = {
+        baseX: mesh.position.x,
+        baseY: mesh.position.y,
+        speed: 0.18 + Math.random() * 0.14,
         drift: Math.random() * Math.PI * 2,
       };
       items.push(mesh);
-    });
+    }
 
     return items;
   }
 
-  function updateSilkLayer(layer, elapsed) {
-    const geometry = layer.geometry;
-    const positionAttribute = geometry.attributes.position;
-    const array = positionAttribute.array;
-    const base = layer.mesh.userData.basePositions;
+  function setHueShift(targetHue) {
+    const hueA = ((targetHue % 360) + 360) % 360;
+    const hueB = (hueA + 72) % 360;
+    const hueC = (hueA + 140) % 360;
 
-    const {
-      strengthA,
-      strengthB,
-      speedA,
-      speedB,
-      phase,
-      drift,
-      baseY,
-      pointerFactorX,
-      pointerFactorY,
-    } = layer.mesh.userData;
+    const colorA = new THREE.Color().setHSL(hueA / 360, 0.72, 0.72);
+    const colorB = new THREE.Color().setHSL(hueB / 360, 0.76, 0.58);
+    const colorC = new THREE.Color().setHSL(hueC / 360, 0.78, 0.64);
 
-    for (let i = 0; i < array.length; i += 3) {
-      const baseX = base[i];
-      const baseYLocal = base[i + 1];
-      const baseZ = base[i + 2];
+    nearParticles.material.color.copy(colorC);
+    midParticles.material.color.copy(colorA);
+    farParticles.material.color.copy(colorB);
 
-      const ripple1 = Math.sin(baseX * 0.32 + elapsed * speedA + phase);
-      const ripple2 = Math.cos(baseYLocal * 0.48 + elapsed * speedB + drift);
-      const ripple3 = Math.sin((baseX + baseYLocal) * 0.18 + elapsed * 0.22 + phase);
+    arcRings[0].material.color.copy(colorA);
+    arcRings[1].material.color.copy(colorB);
+    arcRings[2].material.color.copy(colorC);
 
-      array[i] =
-        baseX +
-        ripple2 * strengthB * 0.26 +
-        pointer.currentX * pointerFactorX * (1 + baseYLocal * 0.02);
+    glowSpheres[0].material.color.copy(colorA);
+    glowSpheres[1].material.color.copy(colorB);
+    glowSpheres[2].material.color.copy(colorC);
 
-      array[i + 1] =
-        baseYLocal +
-        ripple1 * strengthA * 0.22 +
-        pointer.currentY * pointerFactorY;
+    structuralNodes.forEach((mesh, index) => {
+      if (index % 3 === 0) {
+        mesh.material.color.copy(colorA);
+      } else if (index % 3 === 1) {
+        mesh.material.color.copy(colorB);
+      } else {
+        mesh.material.color.copy(colorC);
+      }
+    });
 
-      array[i + 2] =
-        baseZ +
-        ripple1 * strengthA +
-        ripple2 * strengthB +
-        ripple3 * 0.34;
-    }
-
-    positionAttribute.needsUpdate = true;
-    layer.mesh.position.y = baseY + Math.sin(elapsed * 0.12 + phase) * 0.08;
+    const root = document.documentElement;
+    root.style.setProperty("--glow-dynamic-a", colorA.getStyle());
+    root.style.setProperty("--glow-dynamic-b", colorB.getStyle());
+    root.style.setProperty("--glow-dynamic-c", colorC.getStyle());
   }
 
   function animate() {
     const elapsed = clock.getElapsedTime();
 
-    pointer.currentX += (pointer.targetX - pointer.currentX) * 0.03;
-    pointer.currentY += (pointer.targetY - pointer.currentY) * 0.03;
+    pointer.x += (pointer.targetX - pointer.x) * 0.035;
+    pointer.y += (pointer.targetY - pointer.y) * 0.035;
 
-    camera.position.x = pointer.currentX * 0.65;
-    camera.position.y = pointer.currentY * 0.42;
-    camera.lookAt(pointer.currentX * 0.18, pointer.currentY * 0.12, -7);
+    colorState.hue = 192 + Math.sin(elapsed * 0.08) * 42 + Math.cos(elapsed * 0.03) * 18;
+    setHueShift(colorState.hue);
 
-    world.rotation.y = pointer.currentX * 0.035;
-    world.rotation.x = pointer.currentY * 0.025;
-    world.position.y = Math.sin(elapsed * 0.12) * 0.12;
+    camera.position.x = pointer.x * 0.85;
+    camera.position.y = 0.2 + pointer.y * 0.5;
+    camera.lookAt(pointer.x * 0.22, pointer.y * 0.14, -10);
 
-    nearDust.points.rotation.y += prefersReducedMotion ? 0.00008 : 0.00024;
-    nearDust.points.rotation.z += prefersReducedMotion ? 0.00004 : 0.00008;
+    world.rotation.y = elapsed * 0.01 + pointer.x * 0.06;
+    world.rotation.x = pointer.y * 0.025;
+    world.position.y = Math.sin(elapsed * 0.16) * 0.12;
 
-    farDust.points.rotation.y -= prefersReducedMotion ? 0.00003 : 0.00008;
-    blushDust.points.rotation.y += prefersReducedMotion ? 0.00003 : 0.00006;
+    nearParticles.points.rotation.y += prefersReducedMotion ? 0.00005 : 0.0002;
+    nearParticles.points.rotation.z += prefersReducedMotion ? 0.00002 : 0.00008;
 
-    silkLayers.forEach((layer) => {
-      updateSilkLayer(layer, elapsed);
+    midParticles.points.rotation.y -= prefersReducedMotion ? 0.00003 : 0.0001;
+    farParticles.points.rotation.y += prefersReducedMotion ? 0.00001 : 0.00004;
+
+    arcRings.forEach((mesh, index) => {
+      mesh.rotation.x += mesh.userData.speedX * 0.0015;
+      mesh.rotation.y += mesh.userData.speedY * 0.0015;
+      mesh.position.x = mesh.userData.baseX + pointer.x * (0.18 - index * 0.04);
+      mesh.position.y = mesh.userData.baseY + Math.sin(elapsed * (0.12 + index * 0.04)) * (0.12 - index * 0.02);
     });
 
-    haloLayers.forEach((halo, index) => {
-      halo.rotation.x += 0.00015 + index * 0.00003;
-      halo.rotation.y += 0.00022 + index * 0.00004;
-      halo.position.y = halo.userData.baseY + Math.sin(elapsed * halo.userData.speed + halo.userData.drift) * 0.16;
-      halo.position.x = halo.userData.baseX + pointer.currentX * (index === 0 ? 0.18 : 0.1);
+    glowSpheres.forEach((mesh, index) => {
+      mesh.position.x = mesh.userData.baseX + Math.sin(elapsed * mesh.userData.speed + mesh.userData.drift) * 0.16;
+      mesh.position.y = mesh.userData.baseY + Math.cos(elapsed * mesh.userData.speed + mesh.userData.drift) * 0.18;
+      mesh.scale.setScalar(1 + Math.sin(elapsed * 0.22 + index) * 0.06);
     });
 
-    glowOrbs.forEach((orb, index) => {
-      orb.position.y = orb.userData.baseY + Math.sin(elapsed * orb.userData.speed + orb.userData.drift) * 0.22;
-      orb.position.x = orb.userData.baseX + Math.cos(elapsed * orb.userData.speed + orb.userData.drift) * 0.14;
-      orb.scale.setScalar(1 + Math.sin(elapsed * 0.18 + index) * 0.04);
+    structuralNodes.forEach((mesh, index) => {
+      mesh.position.x = mesh.userData.baseX + Math.sin(elapsed * mesh.userData.speed + mesh.userData.drift) * 0.12;
+      mesh.position.y = mesh.userData.baseY + Math.cos(elapsed * mesh.userData.speed + mesh.userData.drift) * 0.14;
+      mesh.rotation.x += 0.006;
+      mesh.rotation.y += 0.008 + index * 0.00005;
     });
 
     renderer.render(scene, camera);
@@ -417,17 +306,17 @@ function initializeThreeBackground() {
   }
 
   function handlePointerMove(event) {
-    const normalizedX = (event.clientX / window.innerWidth) * 2 - 1;
-    const normalizedY = (event.clientY / window.innerHeight) * 2 - 1;
+    const x = (event.clientX / window.innerWidth) * 2 - 1;
+    const y = (event.clientY / window.innerHeight) * 2 - 1;
 
-    pointer.targetX = normalizedX * 0.8;
-    pointer.targetY = -normalizedY * 0.45;
+    pointer.targetX = x * 0.9;
+    pointer.targetY = -y * 0.5;
   }
 
   function handleResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
@@ -441,28 +330,28 @@ function initializeThreeBackground() {
 
     renderer.dispose();
 
-    nearDust.geometry.dispose();
-    nearDust.material.dispose();
+    nearParticles.geometry.dispose();
+    nearParticles.material.dispose();
 
-    farDust.geometry.dispose();
-    farDust.material.dispose();
+    midParticles.geometry.dispose();
+    midParticles.material.dispose();
 
-    blushDust.geometry.dispose();
-    blushDust.material.dispose();
+    farParticles.geometry.dispose();
+    farParticles.material.dispose();
 
-    silkLayers.forEach((layer) => {
-      layer.geometry.dispose();
-      layer.material.dispose();
+    arcRings.forEach((mesh) => {
+      mesh.geometry.dispose();
+      mesh.material.dispose();
     });
 
-    haloLayers.forEach((halo) => {
-      halo.geometry.dispose();
-      halo.material.dispose();
+    glowSpheres.forEach((mesh) => {
+      mesh.geometry.dispose();
+      mesh.material.dispose();
     });
 
-    glowOrbs.forEach((orb) => {
-      orb.geometry.dispose();
-      orb.material.dispose();
+    structuralNodes.forEach((mesh) => {
+      mesh.geometry.dispose();
+      mesh.material.dispose();
     });
   });
 }
