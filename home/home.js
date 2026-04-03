@@ -22,7 +22,7 @@ function initializeThreeBackground() {
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0xf6efe5, 0.032);
+  scene.fog = new THREE.FogExp2(0xfed8d3, 0.03);
 
   const camera = new THREE.PerspectiveCamera(
     45,
@@ -32,18 +32,18 @@ function initializeThreeBackground() {
   );
   camera.position.set(0, 0.3, 17);
 
-  const ambientLight = new THREE.AmbientLight(0xfff5eb, 1.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.45);
   scene.add(ambientLight);
 
-  const pointLightA = new THREE.PointLight(0xffe6c1, 3.6, 90, 2);
+  const pointLightA = new THREE.PointLight(0x99cdd8, 3.6, 90, 2);
   pointLightA.position.set(-10, 6, 10);
   scene.add(pointLightA);
 
-  const pointLightB = new THREE.PointLight(0xf2d8ff, 2.8, 70, 2);
+  const pointLightB = new THREE.PointLight(0xcf06c4, 2.8, 70, 2);
   pointLightB.position.set(8, -2, 7);
   scene.add(pointLightB);
 
-  const pointLightC = new THREE.PointLight(0xf2c775, 2.2, 80, 2);
+  const pointLightC = new THREE.PointLight(0xf3c382, 2.2, 80, 2);
   pointLightC.position.set(0, -8, 12);
   scene.add(pointLightC);
 
@@ -59,9 +59,9 @@ function initializeThreeBackground() {
 
   const clock = new THREE.Clock();
 
-  const starField = createStarField(1800, 18, 11, 22, 0xf5dfb0, 0.95, 0.055);
-  const dustField = createStarField(1400, 34, 18, 40, 0xffffff, 0.28, 0.038);
-  const farField = createStarField(900, 52, 28, 70, 0xf2e9dc, 0.16, 0.03);
+  const starField = createStarField(1800, 18, 11, 22, 0xf3c382, 0.95, 0.055);
+  const dustField = createStarField(1400, 34, 18, 40, 0x99cdd8, 0.28, 0.038);
+  const farField = createStarField(900, 52, 28, 70, 0xfed8d3, 0.16, 0.03);
 
   masterGroup.add(starField.points);
   masterGroup.add(dustField.points);
@@ -145,8 +145,8 @@ function initializeThreeBackground() {
         rx: -0.55,
         ry: 0.6,
         rz: -0.18,
-        color: 0xf7d7ff,
-        opacity: 0.12,
+        color: 0xcf06c4,
+        opacity: 0.1,
         amplitudeX: 0.34,
         amplitudeY: 0.28,
         speed: 0.85,
@@ -160,7 +160,7 @@ function initializeThreeBackground() {
         rx: -0.46,
         ry: -0.44,
         rz: 0.3,
-        color: 0xffd9aa,
+        color: 0xf3c382,
         opacity: 0.1,
         amplitudeX: 0.28,
         amplitudeY: 0.24,
@@ -175,7 +175,7 @@ function initializeThreeBackground() {
         rx: -0.36,
         ry: 0.18,
         rz: -0.08,
-        color: 0xfff1d8,
+        color: 0x99cdd8,
         opacity: 0.08,
         amplitudeX: 0.24,
         amplitudeY: 0.2,
@@ -190,9 +190,9 @@ function initializeThreeBackground() {
 
   function createHaloRings() {
     const configs = [
-      { radius: 4.8, tube: 0.05, color: 0xf0c978, opacity: 0.16, x: 0.5, y: 1.7, z: -2.6, rx: 1.0, ry: 0.15, rz: 0.28 },
-      { radius: 6.5, tube: 0.038, color: 0xf0dcff, opacity: 0.11, x: -0.8, y: 0.2, z: -6.8, rx: 0.92, ry: -0.24, rz: -0.42 },
-      { radius: 8.8, tube: 0.03, color: 0xffead2, opacity: 0.08, x: 0, y: -1.4, z: -11.2, rx: 1.16, ry: 0.08, rz: 0.1 },
+      { radius: 4.8, tube: 0.05, color: 0xdae813, opacity: 0.12, x: 0.5, y: 1.7, z: -2.6, rx: 1.0, ry: 0.15, rz: 0.28 },
+      { radius: 6.5, tube: 0.038, color: 0xcf06c4, opacity: 0.1, x: -0.8, y: 0.2, z: -6.8, rx: 0.92, ry: -0.24, rz: -0.42 },
+      { radius: 8.8, tube: 0.03, color: 0x99cdd8, opacity: 0.08, x: 0, y: -1.4, z: -11.2, rx: 1.16, ry: 0.08, rz: 0.1 },
     ];
 
     return configs.map((config) => {
@@ -219,9 +219,9 @@ function initializeThreeBackground() {
   function createCrystalFrames() {
     const items = [];
     const configs = [
-      { size: 2.4, x: -5.2, y: 2.2, z: -3.2, color: 0xffe8c9, opacity: 0.12 },
-      { size: 1.8, x: 5.8, y: -1.6, z: -4.8, color: 0xf1dbff, opacity: 0.1 },
-      { size: 3.2, x: 2.2, y: 4.0, z: -8.6, color: 0xffd9a8, opacity: 0.08 },
+      { size: 2.4, x: -5.2, y: 2.2, z: -3.2, color: 0xfed8d3, opacity: 0.12 },
+      { size: 1.8, x: 5.8, y: -1.6, z: -4.8, color: 0xcf06c4, opacity: 0.08 },
+      { size: 3.2, x: 2.2, y: 4.0, z: -8.6, color: 0x99cdd8, opacity: 0.08 },
     ];
 
     configs.forEach((config) => {
@@ -251,10 +251,10 @@ function initializeThreeBackground() {
   function createFloatingOrbs() {
     const items = [];
     const configs = [
-      { size: 1.4, x: -4.4, y: 3.2, z: -6.8, color: 0xffe5c4, opacity: 0.12 },
-      { size: 1.0, x: 4.8, y: -2.8, z: -5.4, color: 0xf4d8ff, opacity: 0.1 },
-      { size: 1.9, x: 1.2, y: 3.6, z: -12.5, color: 0xf2c770, opacity: 0.08 },
-      { size: 0.8, x: -1.8, y: -3.4, z: -8.2, color: 0xffffff, opacity: 0.06 },
+      { size: 1.4, x: -4.4, y: 3.2, z: -6.8, color: 0xfed8d3, opacity: 0.12 },
+      { size: 1.0, x: 4.8, y: -2.8, z: -5.4, color: 0xcf06c4, opacity: 0.08 },
+      { size: 1.9, x: 1.2, y: 3.6, z: -12.5, color: 0xf3c382, opacity: 0.08 },
+      { size: 0.8, x: -1.8, y: -3.4, z: -8.2, color: 0x99cdd8, opacity: 0.06 },
     ];
 
     configs.forEach((config) => {
@@ -288,7 +288,7 @@ function initializeThreeBackground() {
 
     for (let i = 0; i < 40; i += 1) {
       const material = new THREE.MeshBasicMaterial({
-        color: i % 3 === 0 ? 0xf6d28f : i % 3 === 1 ? 0xffffff : 0xf0dcff,
+        color: i % 3 === 0 ? 0xdae813 : i % 3 === 1 ? 0xfed8d3 : 0xcf06c4,
         transparent: true,
         opacity: 0.4,
         blending: THREE.AdditiveBlending,
